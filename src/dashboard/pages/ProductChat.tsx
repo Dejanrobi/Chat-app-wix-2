@@ -23,11 +23,20 @@ export function ProductChat(props: { product: products.Product }) {
 
   // submitting messages and sending them to the server
   async function submitMessage() {
-    const newMessage: Message = {
+    // const newMessage: Message = {
+    //   author: "User",
+    //   text: messageDraft ?? "",
+    // };
+
+    const newMessage: string = messageDraft?? "";
+
+    const stateMessage: Message = {
       author: "User",
-      text: messageDraft ?? "",
-    };
-    setChatMessages((state) => [...state, newMessage]);
+      text: newMessage
+    }
+
+    
+    setChatMessages((state) => [...state, stateMessage]);
     setMessageDraft("");
     // setIsWaitingForBusinessBuddy(true);
 
@@ -36,15 +45,20 @@ export function ProductChat(props: { product: products.Product }) {
 
     try {
 
-      const  message  = await fetchWithWixInstance(`/chat/product`, "POST", {
-        messages: [...chatMessages, newMessage],
+      setIsWaitingForBusinessBuddy(true);
+
+      const  { response }  = await fetchWithWixInstance(`/chat/product`, "POST", {
+        // message: [...chatMessages, newMessage],
+        prompt: newMessage,
         product: JSON.stringify(props.product, null, 2),
       });
+
+      // console.log(response)
       setChatMessages((state) => [
         ...state,
         {
           author: "Business Buddy",
-          text: message,
+          text: response,
         },
       ]);
       setIsWaitingForBusinessBuddy(false);
