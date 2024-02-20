@@ -2,6 +2,9 @@
  * This helper function is used to fetch data from the backend.
  * It automatically adds the Authorization header with the app instance.
  */
+
+
+const VITE_API_BASEURL = "https://wix-chat-app-backend.azurewebsites.net/api/v1";
 export async function fetchWithWixInstance(
     relativePath: string,
     method: string,
@@ -9,7 +12,7 @@ export async function fetchWithWixInstance(
   ) {
 
     const res = await fetch(
-      `${import.meta.env.VITE_API_BASEURL}${relativePath}`,
+      `${VITE_API_BASEURL}${relativePath}`,
       {
         method,
         mode: "cors",

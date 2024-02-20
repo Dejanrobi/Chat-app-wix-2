@@ -1,4 +1,4 @@
-import { Text, Box, Card, Input, Loader } from '@wix/design-system';
+import { Text, Box, Card, Input, Loader, Button } from '@wix/design-system';
 import { products } from '@wix/stores';
 import React from 'react';
 import * as Icons from '@wix/wix-ui-icons-common';
@@ -19,6 +19,13 @@ export function ProductChat(props: { product: products.Product }) {
   );
   const [chatMessages, setChatMessages] = React.useState([] as Message[]);
   
+  async function serverWorking(){
+
+    const  response  = await fetchWithWixInstance(`/`, "GET")
+
+    console.log(response)
+
+  }
 
 
   // submitting messages and sending them to the server
@@ -96,6 +103,9 @@ export function ProductChat(props: { product: products.Product }) {
             value={messageDraft}
           />
         </Box>
+        {/* <Button onClick={serverWorking}>
+          Server
+        </Button> */}
         {chatMessages.map((message) => (
           <Box>
             <Text tabName='p'>
